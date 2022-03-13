@@ -29,24 +29,24 @@ const injectCustomCSS = (css) => {
     console.log('Injecting custom css complete');
 };
 
-const showTooltip = (stepIndex) => {
-    document.getElementById(`my-tooltip-${stepIndex}`).style.display = "block";
+const showTooltip = (stepId) => {
+    document.getElementById(`my-tooltip-${stepId}`).style.display = "block";
 };
-const hideTooltip = (stepIndex) => {
-    document.getElementById(`my-tooltip-${stepIndex}`).style.display = "none";
+const hideTooltip = (stepId) => {
+    document.getElementById(`my-tooltip-${stepId}`).style.display = "none";
 };
 
 // show and hide tooltip according to index
-const showHideTooltip = (showIndex, hideIndex) => {
-    console.log(`From step ${hideIndex + 1} to step ${showIndex + 1}`);
-    document.getElementById(`my-tooltip-${hideIndex}`).style.display = "none";
+const showHideTooltip = (showId, hideId) => {
+    console.log(`From step ${hideId} to step ${showId}`);
+    document.getElementById(`my-tooltip-${hideId}`).style.display = "none";
     // showTooltip(showIndex);
 };
 
 // closing tutorial on a step
-const closeTutorial = (hideIndex) => {
-    console.log(`Closing Tutorial on step ${hideIndex + 1}`);
-    document.getElementById(`my-tooltip-${hideIndex}`).style.display = "none";
+const closeTutorial = (hideId) => {
+    console.log(`Closing Tutorial on step ${hideId}`);
+    document.getElementById(`my-tooltip-${hideId}`).style.display = "none";
 };
 
 const createTip = (data, stepIndex) => {
@@ -54,8 +54,9 @@ const createTip = (data, stepIndex) => {
 
     const tooltip = document.createElement('div');
 
+    const stepId = data.structure.steps[stepIndex].id;
 
-    tooltip.id = `my-tooltip-${stepIndex}`;
+    tooltip.id = `my-tooltip-${stepId}`;
 
     tooltip.className = "sttip"
     
@@ -88,10 +89,10 @@ const createTip = (data, stepIndex) => {
     tooltip.getElementsByClassName("steps-count")[0].children[1].innerHTML = data.structure.steps.length;
 
     // add next button click
-    tooltip.getElementsByClassName("next-btn")[0].onclick = () => { showHideTooltip( -1, stepIndex) };
+    tooltip.getElementsByClassName("next-btn")[0].onclick = () => { showHideTooltip( -1, stepId) };
 
     // add close button click
-    tooltip.getElementsByClassName("view-less-container")[0].children[1].onclick = () => { closeTutorial(stepIndex) };
+    tooltip.getElementsByClassName("view-less-container")[0].children[1].onclick = () => { closeTutorial(stepId) };
 
 
 };
