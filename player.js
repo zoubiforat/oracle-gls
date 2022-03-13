@@ -4,6 +4,9 @@ const __5szm2kaj = (data) => {
     else console.log('error while loading JSONP');
 };
 
+const toolTipDict = {};
+const toolTipArr = [];
+
 const injectJSONP = () => {
     console.log('Injecting JSONP input...');
 
@@ -55,6 +58,8 @@ const createTip = (data, stepIndex) => {
     const tooltip = document.createElement('div');
 
     const stepId = data.structure.steps[stepIndex].id;
+    toolTipArr.push(tooltip);
+    toolTipDict[stepId] = tooltip; 
 
     tooltip.id = `my-tooltip-${stepId}`;
 
@@ -70,9 +75,8 @@ const createTip = (data, stepIndex) => {
                             </div>
                         `;
 
-                        
-                        document.body.appendChild(tooltip);
-                        console.log('Creating tip complete!s');
+    document.body.appendChild(tooltip);
+    console.log('Creating tip complete!s');
     tooltip.style = `
     display: block;
     position: absolute;
@@ -93,7 +97,6 @@ const createTip = (data, stepIndex) => {
 
     // add close button click
     tooltip.getElementsByClassName("view-less-container")[0].children[1].onclick = () => { closeTutorial(stepId) };
-
 
 };
 
@@ -136,6 +139,9 @@ const init = () => {
     
     // inject JSONP
     injectJSONP();
+
+    console.log(toolTipArr);
+    console.log(toolTipDict);
 
     console.log('Initializing GLS complete!');
 };
