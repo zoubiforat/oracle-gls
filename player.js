@@ -43,7 +43,10 @@ const hideTooltip = (stepId) => {
 const showHideTooltip = (showId, hideId) => {
     console.log(`From step ${hideId} to step ${showId}`);
     document.getElementById(`my-tooltip-${hideId}`).style.display = "none";
-    // showTooltip(showIndex);
+    if(showId !== "eol0" && showId !== -1){
+        console.log(`showing ${showId}`);
+        document.getElementById(`my-tooltip-${showId}`).style.display = "block";
+    }
 };
 
 // closing tutorial on a step
@@ -53,7 +56,9 @@ const closeTutorial = (hideId) => {
 };
 
 const createTip = (data, stepIndex) => {
+    if (data.structure.steps[stepIndex].action.type === "closeScenario") return;
     console.log('Creating tip...');
+
 
     const tooltip = document.createElement('div');
 
@@ -78,8 +83,8 @@ const createTip = (data, stepIndex) => {
     document.body.appendChild(tooltip);
     console.log('Creating tip complete!s');
     tooltip.style = `
-    display: block;
-    position: absolute;
+    display: none;
+    position: relative;
     `
 
     document.body.appendChild(tooltip);
@@ -93,7 +98,8 @@ const createTip = (data, stepIndex) => {
     tooltip.getElementsByClassName("steps-count")[0].children[1].innerHTML = data.structure.steps.length;
 
     // add next button click
-    tooltip.getElementsByClassName("next-btn")[0].onclick = () => { showHideTooltip( -1, stepId) };
+    let showId = data.structure.steps[stepIndex].followers[0].next;
+    tooltip.getElementsByClassName("next-btn")[0].onclick = () => { showHideTooltip( showId, stepId) };
 
     // add close button click
     tooltip.getElementsByClassName("view-less-container")[0].children[1].onclick = () => { closeTutorial(stepId) };
@@ -108,7 +114,11 @@ const handleJSONP = (data) => {
     
     console.log(data);
 
-    createTip(data, 0);
+    for (let i = 0; i < data.structure.steps.length; i++) {
+        createTip(data, i);
+    }
+
+    showTooltip(1);
 
     console.log('Handling JSONP input complete!');
 };
