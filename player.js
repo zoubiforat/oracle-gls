@@ -81,12 +81,34 @@ const createTip = (data, stepIndex) => {
                         `;
 
     document.body.appendChild(tooltip);
-    console.log('Creating tip complete!s');
+    console.log('Creating tip complete!');
+
     tooltip.style = `
     display: none;
-    position: relative;
+    position: absolute;
     `
 
+    // set fixed positions
+    const positions = [
+        {top: 250, left: 1020},
+        {top: 50, left: 1456},
+        {top: 420, left: 720},
+        {top: 490, left: 660},
+    ];
+    tooltip.style.top = `${positions[stepIndex].top}px`;
+    tooltip.style.left = `${positions[stepIndex].left}px`;
+
+    // set position
+    // if (data.structure.steps[stepIndex].action.selector)  {
+    //     try {
+    //         const { top, left } = $(data.structure.steps[stepIndex].action.selector).position();
+    //         console.log(top, left);
+    //         tooltip.style.top = `${top}px`;
+    //         tooltip.style.left = `${left}px`;
+    //     } catch (exception) {}
+    // }
+
+    // render on site
     document.body.appendChild(tooltip);
 
     /** add data and functionality */ 
@@ -95,7 +117,7 @@ const createTip = (data, stepIndex) => {
 
     // add steps
     tooltip.getElementsByClassName("steps-count")[0].children[0].innerHTML = stepIndex + 1;
-    tooltip.getElementsByClassName("steps-count")[0].children[1].innerHTML = data.structure.steps.length;
+    tooltip.getElementsByClassName("steps-count")[0].children[1].innerHTML = data.structure.steps.length - 1;
 
     // add next button click
     let showId = data.structure.steps[stepIndex].followers[0].next;
@@ -140,12 +162,31 @@ const injectCSS = () => {
     console.log('Injecting CSS complete!');
 };
 
+// inject jQuery
+const injectJQuery = () => {
+    console.log('Injecting JQuery...');
+
+    // create script
+    var cssLink = document.createElement('script')
+
+    // change attributes
+    cssLink.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js';
+
+    // append jquery
+    document.head.appendChild(cssLink);
+
+    console.log('Injecting JQuery complete!');
+};
+
 // init method
 const init = () => {
     console.log('Initializing GLS...');
     
     // inject css
     injectCSS();
+
+    // inject jquery
+    injectJQuery();
     
     // inject JSONP
     injectJSONP();
