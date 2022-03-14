@@ -10,7 +10,7 @@ This project has a JS script that can be injected to www.google.com through Chro
 - Internet connection
 - Content in player.js
 
-## How to run ##
+## How to run the code ##
 
 1. Navigate to www.google.com on your chrome browser.
 2. Open DevTools and navigate to the Console tab.
@@ -18,3 +18,7 @@ This project has a JS script that can be injected to www.google.com through Chro
 4. Paste the content of player.js in the Console.
 5. Click Enter!
 6. Enjoy the Tutorial.
+
+## Demonstration ##
+
+Demonstrated in a youtube video: https://youtu.be/yKPTbYmsHC0
